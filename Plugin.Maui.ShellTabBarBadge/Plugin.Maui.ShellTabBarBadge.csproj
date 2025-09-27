@@ -25,8 +25,8 @@
 		<Description>A .NET MAUI plugin that adds customizable badges to Shell TabBar items</Description>
 		<PackageTags>MAUI;Plugin;Shell;TabBar;Badge</PackageTags>
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/darrabam/Plugin.Maui.TabBarBadge</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/darrabam/Plugin.Maui.TabBarBadge</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/darrabam/Plugin.Maui.ShellTabBarBadge</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/darrabam/Plugin.Maui.ShellTabBarBadge</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>Initial release with support for text and dot badges on iOS and Android.</PackageReleaseNotes>

@@ -56,7 +56,7 @@
             <Button Text="⇐" FontSize="Large" Grid.Row="1" Padding="0" Grid.Column="0" Clicked="DecrementAnchorXClicked" />
             <Button Text="⇒" FontSize="Large" Grid.Row="1" Padding="0" Grid.Column="2" Clicked="IncrementAnchorXClicked" />
             <Button Text="⇓" FontSize="Large" Grid.Row="2" Padding="0" Grid.Column="1" Clicked="IncrementAnchorYClicked" />
-            <Button Text="Rest" FontSize="Small" BackgroundColor="Purple" Grid.Row="1" Padding="0" Grid.Column="1" Clicked="RestAnchorClicked" />
+            <Button Text="Reset" FontSize="Small" BackgroundColor="Purple" Grid.Row="1" Padding="0" Grid.Column="1" Clicked="RestAnchorClicked" />
             
         </Grid>
     </Grid>
