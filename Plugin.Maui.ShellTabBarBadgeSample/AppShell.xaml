@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Plugin.Maui.ShellTabBarBadgeSample.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Plugin.Maui.ShellTabBarBadgeSample"
+    Title="Plugin.Maui.TabBarBadgeSample">
+
+    <TabBar>
+
+        <Tab Icon="house.png" Title="Home">
+            <ShellContent Title="" Icon="house.png" ContentTemplate="{DataTemplate local:HomePage}"  />
+        </Tab>
+        <Tab Icon="email.png" Title="Emails">
+            <ShellContent Title="" ContentTemplate="{DataTemplate local:EmailsPage}"  />
+        </Tab>
+        <Tab Icon="menu.png" Title="Items">
+            <ShellContent Title="" ContentTemplate="{DataTemplate local:ItemsPage}"  />
+        </Tab>
+        <Tab Icon="user.png" Title="Profile">
+            <ShellContent Title="" ContentTemplate="{DataTemplate local:ProfilePage}"  />
+        </Tab>
+    </TabBar>
+</Shell>

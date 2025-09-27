@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plugin.Maui.ShellTabBarBadgeSample.ItemsPage">
+    <ContentPage.Resources>
+        <Style TargetType="Button" >
+            <Setter Property="TextColor" Value = "Black" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="Title" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="350" />
+            <RowDefinition Height="200" />
+        </Grid.RowDefinitions>
+        <Label 
+            Grid.Row="0"
+            Text="Badge is set to disapear on OnDisappearing"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label 
+            Grid.Row="1"
+            Text="Emoji Badge Test, click on emojis to see how it will look as a badge"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"/>
+        <Grid Grid.Row="2" HorizontalOptions="CenterAndExpand" ColumnSpacing="10" RowSpacing="10" VerticalOptions="CenterAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+            <Button Text="🍕"  Grid.Row="0" Grid.Column="0" Clicked="EmojiSelected" />
+            <Button Text="🥩"  Grid.Row="0" Grid.Column="1" Clicked="EmojiSelected" />
+            <Button Text="🍔"  Grid.Row="0" Grid.Column="2" Clicked="EmojiSelected" />
+            <Button Text="🌿"  Grid.Row="1" Grid.Column="0" Clicked="EmojiSelected" />
+            <Button Text="🍀"  Grid.Row="1" Grid.Column="1" Clicked="EmojiSelected" />
+            <Button Text="🌴"  Grid.Row="1" Grid.Column="2" Clicked="EmojiSelected" />
+            <Button Text="💚"  Grid.Row="2" Grid.Column="0" Clicked="EmojiSelected" />
+            <Button Text="🎉"  Grid.Row="2" Grid.Column="1" Clicked="EmojiSelected" />
+            <Button Text="🏀"  Grid.Row="2" Grid.Column="2" Clicked="EmojiSelected" />
+            <Button Text="🎲"  Grid.Row="3" Grid.Column="0" Clicked="EmojiSelected" />
+            <Button Text="🏆"  Grid.Row="3" Grid.Column="1" Clicked="EmojiSelected" />
+            <Button Text="😱"  Grid.Row="3" Grid.Column="2" Clicked="EmojiSelected" />
+            <Button Text="♡"   Grid.Row="4" Grid.Column="0" Clicked="EmojiSelected" />
+            <Button Text="♧"   Grid.Row="4" Grid.Column="1" Clicked="EmojiSelected" />
+            <Button Text="★"  Grid.Row="4" Grid.Column="2" Clicked="EmojiSelected" />
+            <Button Text="∞"   Grid.Row="5" Grid.Column="0" Clicked="EmojiSelected" />
+            <Button Text="♤"   Grid.Row="5" Grid.Column="1" Clicked="EmojiSelected" />
+            <Button Text="♢"   Grid.Row="5" Grid.Column="2" Clicked="EmojiSelected" />
+            
+
+        </Grid>
+        <Grid Grid.Row="3" Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <Label HorizontalTextAlignment="Center" Grid.Row="0" Grid.ColumnSpan="6">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Emoji" TextDecorations="Underline" FontSize="Default" />
+                        <Span Text=" ignores font color by design" FontAttributes="None" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label Text="Font color" Grid.Row="1" />
+            <Label Text="Font Size" Grid.Row="2" VerticalTextAlignment="Center" />
+            <Button Text="Red"    FontSize="9"  BackgroundColor="Red"    TextColor="White" Grid.Row="1" Grid.Column="1" Clicked="OnFontColorClicked"/>
+            <Button Text="Green"  FontSize="9"  BackgroundColor="Green"  TextColor="White" Grid.Row="1" Grid.Column="2" Clicked="OnFontColorClicked"/>
+            <Button Text="Purple" FontSize="9"  BackgroundColor="Purple" TextColor="White" Grid.Row="1" Grid.Column="3" Clicked="OnFontColorClicked"/>
+            <Button Text="Black"  FontSize="9"  BackgroundColor="Black"  TextColor="White" Grid.Row="1" Grid.Column="4" Clicked="OnFontColorClicked"/>
+            <Slider Minimum="6" Maximum="25" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" HeightRequest="20" ValueChanged="FontSizeChanged" />
+        </Grid>
+    </Grid>
+</ContentPage>

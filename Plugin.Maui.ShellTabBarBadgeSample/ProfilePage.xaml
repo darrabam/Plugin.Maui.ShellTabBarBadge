@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plugin.Maui.ShellTabBarBadgeSample.ProfilePage"
+             Title="ProfilePage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label 
+            Grid.Row="0"
+            Text="HorizontalOptions / VerticalOptions Demo"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid Grid.Row="1" HorizontalOptions="CenterAndExpand" ColumnSpacing="10" RowSpacing="10" VerticalOptions="CenterAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Clicked="TopLeftClicked" />
+            <Button Grid.Row="0" Grid.Column="1" Clicked="TopCenterClicked" />
+            <Button Grid.Row="0" Grid.Column="2" Clicked="TopRightClicked" />
+            <Button Grid.Row="1" Grid.Column="0" Clicked="CenterLeftClicked" />
+            <Button Grid.Row="1" Grid.Column="1" Clicked="CenterClicked" />
+            <Button Grid.Row="1" Grid.Column="2" Clicked="CenterRightClicked" />
+            <Button Grid.Row="2" Grid.Column="0" Clicked="BottomLeftClicked" />
+            <Button Grid.Row="2" Grid.Column="1" Clicked="BottomCenterClicked" />
+            <Button Grid.Row="2" Grid.Column="2" Clicked="BottomRightClicked" />
+        </Grid>
+        <Label 
+            Grid.Row="2"
+            Text="Anchor Demo"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid Grid.Row="3" HorizontalOptions="CenterAndExpand" ColumnSpacing="10" RowSpacing="10" VerticalOptions="CenterAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <Button Text="⇑" FontSize="Large" Grid.Row="0" Padding="0" Grid.Column="1" Clicked="DecrementAnchorYClicked"  />
+            <Button Text="⇐" FontSize="Large" Grid.Row="1" Padding="0" Grid.Column="0" Clicked="DecrementAnchorXClicked" />
+            <Button Text="⇒" FontSize="Large" Grid.Row="1" Padding="0" Grid.Column="2" Clicked="IncrementAnchorXClicked" />
+            <Button Text="⇓" FontSize="Large" Grid.Row="2" Padding="0" Grid.Column="1" Clicked="IncrementAnchorYClicked" />
+            <Button Text="Rest" FontSize="Small" BackgroundColor="Purple" Grid.Row="1" Padding="0" Grid.Column="1" Clicked="RestAnchorClicked" />
+            
+        </Grid>
+    </Grid>
+</ContentPage>
