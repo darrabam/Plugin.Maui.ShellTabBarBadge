@@ -208,6 +208,11 @@ Contributions are welcome!
 
 ---
 
+## ⭐ Show Your Support
+
+If you find **Plugin.Maui.ShellBadgeTabBarBadge** useful in your projects, please consider giving the repository a ⭐.  
+It helps others discover the library and motivates continued development.
+
 ## Credits
 
 A significant portion of this library was co-created with **ChatGPT**.  
