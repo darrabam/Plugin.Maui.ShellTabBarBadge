@@ -11,7 +11,7 @@ iOS | Android
 
 `Plugin.Maui.ShellTabBarBadge` is a lightweight yet powerful .NET MAUI plugin that adds **badges** to Shell `TabBar` items.  
 
-- ✅ Supports **text badges**, **dot (indicator) badges**, and **hidden badges**  
+- ✅ Supports **text badges**, **dot (indicator) badges**
 - ✅ Works with **Unicode text, symbols, and emoji**  
 - ✅ Fully customizable: background color, text color, font size, and badge position  
 - ✅ Stateless and easy to use with a single API  
