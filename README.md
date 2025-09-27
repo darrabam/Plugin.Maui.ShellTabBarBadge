@@ -2,7 +2,12 @@
 
 iOS | Android
 ----|--------
-<video src="https://github.com/user-attachments/assets/8a2c9dcb-08bb-4004-a134-2a3e6635e256" controls width="300" title="iOS Demo"></video> | <video src="https://github.com/user-attachments/assets/cbaaf2b0-6a5c-486d-85e3-0feaae3c6b6f" controls width="300" title="Android Demo"></video>
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/73439aed-46dd-4479-b234-3c2a6639b3bc" width="340"/></td>
+    <td><img src="https://github.com/user-attachments/assets/5255d77b-ea6e-412d-b1c0-40dcc6f38974" width="340"/></td>
+  </tr>
+</table>
 
 `Plugin.Maui.ShellTabBarBadge` is a lightweight yet powerful .NET MAUI plugin that adds **badges** to Shell `TabBar` items.  
 
