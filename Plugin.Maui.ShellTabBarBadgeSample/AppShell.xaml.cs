@@ -17,10 +17,10 @@ namespace Plugin.Maui.ShellTabBarBadgeSample
             // Delay after the Shell has loaded to make sure tabs have been initiated.
             await Task.Delay(500); 
 
-            Badge.Set(0, "New", color: Colors.Purple);
-            Badge.Set(1, "9");
-            Badge.Set(2, "🍕", textColor: Colors.Green, color: Colors.Transparent);
-            Badge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue);
+            TabBarBadge.Set(0, "New", color: Colors.Purple);
+            TabBarBadge.Set(1, "9");
+            TabBarBadge.Set(2, "🍕", textColor: Colors.Green, color: Colors.Transparent);
+            TabBarBadge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue);
         }
     }
 }

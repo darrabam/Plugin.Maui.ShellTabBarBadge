@@ -4,14 +4,14 @@ using UIKit;
 
 namespace Plugin.Maui.ShellTabBarBadge;
 
-public static partial class Badge
+public static partial class TabBarBadge
 {
     static partial void ShowImpl(
         int tabIndex,
         bool isDot,
         string? text,
-        Color foreground,
-        Color background,
+        Color textColor,
+        Color color,
         int anchorX,
         int anchorY,
         HorizontalAlignment horizontal,
@@ -22,8 +22,8 @@ public static partial class Badge
             tabIndex,
             isDot,
             text,
-            background.ToPlatform(),
-            foreground.ToPlatform(),
+            color.ToPlatform(),      // background
+            textColor.ToPlatform(),  // foreground
             anchorX,
             anchorY,
             horizontal,

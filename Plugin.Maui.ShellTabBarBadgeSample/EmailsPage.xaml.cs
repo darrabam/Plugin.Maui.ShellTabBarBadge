@@ -12,12 +12,12 @@ public partial class EmailsPage : ContentPage
     private void OnIncrementBadgeClicked(object sender, EventArgs e)
     {
         App.badgeCounter++;
-        Badge.Set(1, App.badgeCounter.ToString(), textColor: Colors.White, color: Colors.Red);
+        TabBarBadge.Set(1, App.badgeCounter.ToString(), textColor: Colors.White, color: Colors.Red);
     }
 
     private void OnDecrementBadgeClicked(object sender, EventArgs e)
     {
         App.badgeCounter--;
-        Badge.Set(1, App.badgeCounter.ToString(), textColor: Colors.White, color: Colors.Red);
+        TabBarBadge.Set(1, App.badgeCounter.ToString(), textColor: Colors.White, color: Colors.Red);
     }
 }

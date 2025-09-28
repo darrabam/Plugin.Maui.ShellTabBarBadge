@@ -20,7 +20,7 @@ public partial class ItemsPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        Badge.Set(2, style: BadgeStyle.Hidden);
+        TabBarBadge.Set(2, style: BadgeStyle.Hidden);
     }
 
     private void EmojiSelected(object sender, EventArgs e)
@@ -29,7 +29,7 @@ public partial class ItemsPage : ContentPage
         if (btn == null) return;
         this.text = btn.Text;
 
-        Badge.Set(2, text: this.text, textColor: this.textColor, color: Colors.Transparent, fontSize: this.fontSize);
+        TabBarBadge.Set(2, text: this.text, textColor: this.textColor, color: Colors.Transparent, fontSize: this.fontSize);
     }
 
     private void OnFontColorClicked(object sender, EventArgs e)
@@ -38,12 +38,12 @@ public partial class ItemsPage : ContentPage
         if (btn == null) return;
             this.textColor = btn.BackgroundColor;
 
-        Badge.Set(2, text: this.text, textColor: this.textColor , color: Colors.Transparent, fontSize: this.fontSize);
+        TabBarBadge.Set(2, text: this.text, textColor: this.textColor , color: Colors.Transparent, fontSize: this.fontSize);
     }
 
     private void FontSizeChanged(object sender, ValueChangedEventArgs e)
     {
         this.fontSize = (int)e.NewValue;
-        Badge.Set(2, text: this.text, textColor: this.textColor, color: Colors.Transparent, fontSize: this.fontSize);
+        TabBarBadge.Set(2, text: this.text, textColor: this.textColor, color: Colors.Transparent, fontSize: this.fontSize);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Plugin.Maui.ShellTabBarBadge;
 
-public static partial class Badge
+public static partial class TabBarBadge
 {
     static BadgeOptions _options = new();
 

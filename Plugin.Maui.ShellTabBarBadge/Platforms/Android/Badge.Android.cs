@@ -7,7 +7,7 @@ using Microsoft.Maui.Platform;
 
 namespace Plugin.Maui.ShellTabBarBadge;
 
-public static partial class Badge
+public static partial class TabBarBadge
 {
     static partial void ShowImpl(
         int tabIndex, bool isDot, string? text,
@@ -17,7 +17,7 @@ public static partial class Badge
         VerticalAlignment vertical,
         double fontSize)
     {
-        var shell = Application.Current?.MainPage as Shell;
+        var shell = Application.Current?.Windows.FirstOrDefault()?.Page as Shell;
         if (shell == null) return;
 
         var handler = shell.Handler?.PlatformView as ViewGroup;
@@ -41,8 +41,15 @@ public static partial class Badge
         if (existing != null)
             tabButton.RemoveView(existing); // ensures anchor updates
 
-        var ctx = tabButton.Context;
-        int dpToPx(int dp) => (int)(dp * ctx.Resources.DisplayMetrics.Density);
+        var ctx = tabButton?.Context
+                  ?? throw new InvalidOperationException("Tab context is null.");
+
+        int dpToPx(int dp)
+        {
+            var metrics = ctx?.Resources?.DisplayMetrics
+                          ?? throw new InvalidOperationException("DisplayMetrics unavailable.");
+            return (int)(dp * metrics.Density);
+        }
 
         // If style is Dot, replace text with a Unicode dot
         if (isDot)
@@ -166,7 +173,7 @@ public static partial class Badge
 
     static partial void HideImpl(int tabIndex)
     {
-        var shell = Application.Current?.MainPage as Shell;
+        var shell = Application.Current?.Windows.FirstOrDefault()?.Page as Shell;
         if (shell == null) return;
 
         var handler = shell.Handler?.PlatformView as ViewGroup;

@@ -20,10 +20,10 @@ In your **MauiProgram.cs**:
 builder.UseTabBarBadge();
 
 // Example usage
-Badge.Set(0, "9");                         // Text badge
-Badge.Set(1, style: BadgeStyle.Dot);       // Dot badge
-Badge.Set(2, "🍕", color: Colors.Transparent);
-Badge.Set(3, "New", color: Colors.Purple);
+TabBarBadge.Set(0, "9");                         // Text badge
+TabBarBadge.Set(1, style: BadgeStyle.Dot);       // Dot badge
+TabBarBadge.Set(2, "🍕", color: Colors.Transparent);
+TabBarBadge.Set(3, "New", color: Colors.Purple);
 ```
 
 ------------------------------------------------------------------------

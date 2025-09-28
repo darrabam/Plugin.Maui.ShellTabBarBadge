@@ -11,14 +11,14 @@ public partial class HomePage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        Badge.Set(0, "New", textColor: Colors.Purple, color: Colors.Transparent);
+        TabBarBadge.Set(0, "New", textColor: Colors.Purple, color: Colors.Transparent);
     }
 
     private void OnResetBadgesClicked(object sender, EventArgs e)
     {
-        Badge.Set(0, "New", color: Colors.Purple);
-        Badge.Set(1, "9");
-        Badge.Set(2, "🍕", textColor: Colors.Green, color: Colors.Transparent);
-        Badge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue);
+        TabBarBadge.Set(0, "New", color: Colors.Purple);
+        TabBarBadge.Set(1, "9");
+        TabBarBadge.Set(2, "🍕", textColor: Colors.Green, color: Colors.Transparent);
+        TabBarBadge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue);
     }
 }

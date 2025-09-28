@@ -11,7 +11,7 @@ public static class MauiAppBuilderExtensions
     {
         var options = new BadgeOptions();
         configure?.Invoke(options);
-        Badge.Configure(options);
+        TabBarBadge.Configure(options);
 
 #if IOS || MACCATALYST
         builder.ConfigureMauiHandlers(handlers =>

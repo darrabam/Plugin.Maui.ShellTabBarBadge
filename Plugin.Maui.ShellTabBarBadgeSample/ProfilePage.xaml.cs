@@ -89,7 +89,7 @@ public partial class ProfilePage : ContentPage
     }
     private void UpdateBadge()
     {
-        Badge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue, horizontal: this.horizontalAlignment, vertical: this.verticalAlignment, anchorX: this.badgeAnchorX, anchorY: this.badgeAnchorY);
+        TabBarBadge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue, horizontal: this.horizontalAlignment, vertical: this.verticalAlignment, anchorX: this.badgeAnchorX, anchorY: this.badgeAnchorY);
     }
 
     private void DecrementAnchorXClicked(object sender, EventArgs e)
