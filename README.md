@@ -161,7 +161,7 @@ Coordinate system:
 
 The library is **stateless**:
 - It does **not track badge state**.  
-- You must re-apply badges in your page lifecycle (`OnAppearing`, `OnDisappearing`) or bind via ViewModels.  
+- You must manually update badge status, typically within page lifecycle methods such as `OnAppearing` and `OnDisappearing`, or in other relevant event handlers. 
 
 Example:
 
