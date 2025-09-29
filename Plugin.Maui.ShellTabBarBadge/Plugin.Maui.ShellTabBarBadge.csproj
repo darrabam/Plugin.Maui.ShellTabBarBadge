@@ -19,7 +19,7 @@
 
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageId>Plugin.Maui.ShellTabBarBadge</PackageId>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<Authors>Abdulaziz Aldarrab</Authors>
 		<Company></Company>
 		<Description>A .NET MAUI plugin that adds customizable badges to Shell TabBar items</Description>
