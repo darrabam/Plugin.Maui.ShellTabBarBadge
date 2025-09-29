@@ -6,9 +6,17 @@ using UIKit;
 
 namespace Plugin.Maui.ShellTabBarBadge;
 
-// Wire our custom tracker into Shell
+/// <summary>
+/// Custom Shell renderer that injects badge support into the iOS tab bar.
+/// </summary>
 public class TabBarBadgeRenderer : ShellRenderer
 {
+    /// <summary>
+    /// Creates the custom tab bar appearance tracker that adds badge rendering support.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="BadgeShellTabBarAppearanceTracker"/> instance for managing tab bar badges.
+    /// </returns>
     protected override IShellTabBarAppearanceTracker CreateTabBarAppearanceTracker()
         => new BadgeShellTabBarAppearanceTracker();
 }

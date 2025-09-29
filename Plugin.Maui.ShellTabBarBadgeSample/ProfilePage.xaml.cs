@@ -16,7 +16,6 @@ public partial class ProfilePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-		//Badge.Set(3, style: BadgeStyle.Hidden);
     }
 
     private void TopLeftClicked(object sender, EventArgs e)

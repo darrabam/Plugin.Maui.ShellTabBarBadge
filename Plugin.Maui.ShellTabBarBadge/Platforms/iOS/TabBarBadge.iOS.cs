@@ -4,6 +4,10 @@ using UIKit;
 
 namespace Plugin.Maui.ShellTabBarBadge;
 
+/// <summary>
+/// Provides a cross-platform API for showing and managing badges 
+/// on .NET MAUI Shell tab bar items.
+/// </summary>
 public static partial class TabBarBadge
 {
     static partial void ShowImpl(
