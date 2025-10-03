@@ -1,8 +1,11 @@
 ﻿<maui:MauiWinUIApplication
     x:Class="Plugin.Maui.ShellBadgeSample.WinUI.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:Plugin.Maui.ShellBadgeSample.WinUI">
-
+    xmlns:maui="Microsoft.Maui"
+    xmlns:local="Plugin.Maui.ShellBadgeSample.WinUI">
+    <Application.Resources>
+        <Style TargetType="NavigationViewItem">
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+    </Application.Resources>
 </maui:MauiWinUIApplication>
