@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Plugin.Maui.ShellBadgeSample
+namespace Plugin.Maui.ShellTabBarBadgeSample
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

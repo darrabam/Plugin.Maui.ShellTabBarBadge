@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
-using Plugin.Maui.ShellTabBarBadgeSample;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Plugin.Maui.ShellBadgeSample.WinUI
+namespace Plugin.Maui.ShellTabBarBadgeSample.WinUI
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

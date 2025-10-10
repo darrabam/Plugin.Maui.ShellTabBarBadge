@@ -20,10 +20,11 @@ In your **MauiProgram.cs**:
 builder.UseTabBarBadge();
 
 // Example usage
-TabBarBadge.Set(0, "9");                         // Text badge
-TabBarBadge.Set(1, style: BadgeStyle.Dot);       // Dot badge
-TabBarBadge.Set(2, "🍕", color: Colors.Transparent);
-TabBarBadge.Set(3, "New", color: Colors.Purple);
+TabBarBadge.Set(0, "9");								// Shows number 9 on red pill-shaped badge on Tab 0
+TabBarBadge.Set(1, style: BadgeStyle.Dot);				// Shows a red Dot badge on Tab 1
+TabBarBadge.Set(2, "🍕", color: Colors.Transparent);		// Shows a pizza badge on Tab 2
+TabBarBadge.Set(3, "New", color: Colors.Purple);		// Shows the word New on purple pill-shaped badge on Tab 3
+TabBarBadge.Set(0, style: BadgeStyle.Hidden);			// Hides badge on Tab 0
 ```
 
 ------------------------------------------------------------------------

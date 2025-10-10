@@ -2,7 +2,19 @@
   "profiles": {
     "Windows Machine": {
       "commandName": "Project",
-      "nativeDebugging": false
+      "targetFramework": "net9.0-windows10.0.19041.0"
+    },
+    "Android Emulator": {
+      "commandName": "Project",
+      "targetFramework": "net9.0-android"
+    },
+    "iOS Simulator": {
+      "commandName": "Project",
+      "targetFramework": "net9.0-ios"
+    },
+    "Mac Catalyst": {
+      "commandName": "Project",
+      "targetFramework": "net9.0-maccatalyst"
     }
   }
 }

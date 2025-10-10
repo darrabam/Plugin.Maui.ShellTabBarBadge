@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Plugin.Maui.ShellBadgeSample
+namespace Plugin.Maui.ShellTabBarBadgeSample
 {
     public class Program
     {

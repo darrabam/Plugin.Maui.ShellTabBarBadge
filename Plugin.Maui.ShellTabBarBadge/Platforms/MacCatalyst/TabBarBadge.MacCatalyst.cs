@@ -1,7 +1,14 @@
-﻿using System;
+﻿#if MACCATALYST
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Platform;
+using UIKit;
 
-namespace Plugin.Maui.TabBarBadge;
+namespace Plugin.Maui.ShellTabBarBadge;
 
+/// <summary>
+/// Provides a cross-platform API for showing and managing badges 
+/// on .NET MAUI Shell tab bar items.
+/// </summary>
 public static partial class TabBarBadge
 {
     static partial void ShowImpl(
@@ -16,11 +23,33 @@ public static partial class TabBarBadge
         VerticalAlignment vertical,
         double fontSize)
     {
-        throw new NotImplementedException("TabBarBadge is not implemented on this platform.");
+        // Mac Catalyst uses UIKit, so reuse the iOS badge tracker
+        BadgeShellTabBarAppearanceTracker.SetBadge(
+            tabIndex,
+            isDot,
+            text,
+            color.ToPlatform(),      // background
+            textColor.ToPlatform(),  // foreground
+            anchorX,
+            anchorY,
+            horizontal,
+            vertical,
+            fontSize);
     }
 
     static partial void HideImpl(int tabIndex)
     {
-        throw new NotImplementedException("TabBarBadge is not implemented on this platform.");
+        BadgeShellTabBarAppearanceTracker.SetBadge(
+            tabIndex,
+            false,
+            null,
+            null,
+            null,
+            0,
+            0,
+            HorizontalAlignment.Right,
+            VerticalAlignment.Top,
+            11);
     }
 }
+#endif

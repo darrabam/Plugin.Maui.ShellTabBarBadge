@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.Maui.Platform;
+using System;
 using System.Linq;
-using Microsoft.Maui.Platform;
+using static System.Net.Mime.MediaTypeNames;
 using MauiControls = Microsoft.Maui.Controls;
 using MauiGraphics = Microsoft.Maui.Graphics;
-using WinUI = Microsoft.UI.Xaml;
 using WinControls = Microsoft.UI.Xaml.Controls;
 using WinMedia = Microsoft.UI.Xaml.Media;
 using WinShapes = Microsoft.UI.Xaml.Shapes;
+using WinUI = Microsoft.UI.Xaml;
 
 namespace Plugin.Maui.ShellTabBarBadge;
 
@@ -105,6 +106,10 @@ public static partial class TabBarBadge
         }
         else
         {
+            // Force text presentation for symbols/emoji so Foreground brush applies.
+            var isEmoji = IsEmoji(text);
+            var isSymbol = IsSymbol(text);
+
             var tb = new WinControls.TextBlock
             {
                 Text = text,
@@ -116,6 +121,24 @@ public static partial class TabBarBadge
                 Tag = tag
             };
 
+            // ✅ only set FontFamily when forcing monochrome symbol rendering
+            if (IsSymbol(text))
+            {
+                // Use emoji font by default (so full-color emojis look correct)
+                tb.FontFamily = new WinMedia.FontFamily("Segoe UI Emoji");
+
+                // Heuristic: if text is a single character that is NOT emoji-range, force symbol font
+                if (!IsEmoji(text) && text?.Length == 1)
+                {
+                    tb.FontFamily = new WinMedia.FontFamily("Segoe UI Symbol");
+                    tb.Foreground = new WinMedia.SolidColorBrush(textColor.ToWindowsColor());
+                }
+                else
+                {
+                    // leave emoji colorful (Foreground is ignored for color glyphs)
+                    tb.Foreground = new WinMedia.SolidColorBrush(textColor.ToWindowsColor());
+                }
+            }
             var border = new WinControls.Border
             {
                 Background = new WinMedia.SolidColorBrush(color.ToWindowsColor()),
@@ -147,7 +170,6 @@ public static partial class TabBarBadge
         var navView = FindChild<WinControls.NavigationView>(root);
         if (navView == null || tabIndex < 0) return;
 
-        // ✅ Use visual tree instead of MenuItems
         var navItems = navView.GetDescendants()
                               .OfType<WinControls.NavigationViewItem>()
                               .ToList();
@@ -155,15 +177,21 @@ public static partial class TabBarBadge
         if (tabIndex >= navItems.Count) return;
 
         var menuItem = navItems[tabIndex];
-        if (menuItem?.Content is WinControls.Grid grid)
-        {
-            var tag = 90000 + tabIndex;
-            var existing = grid.Children.OfType<WinUI.FrameworkElement>()
-                                        .FirstOrDefault(c => (int?)c.Tag == tag);
-            if (existing != null)
-                grid.Children.Remove(existing);
-        }
+        if (menuItem == null) return;
+
+        // ✅ use same grid we used for placement
+        var container = FindLayoutRoot(menuItem);
+        if (container == null) return;
+
+        var tag = 90000 + tabIndex;
+        var existing = container.Children
+            .OfType<WinUI.FrameworkElement>()
+            .FirstOrDefault(c => (int?)c.Tag == tag);
+
+        if (existing != null)
+            container.Children.Remove(existing);
     }
+
 
     static T? FindChild<T>(WinUI.FrameworkElement parent) where T : WinUI.FrameworkElement
     {
@@ -215,8 +243,46 @@ public static partial class TabBarBadge
                    .OfType<WinControls.Grid>()
                    .FirstOrDefault(g => g.Name == "LayoutRoot");
     }
+    static bool IsEmoji(string? s)
+    {
+        if (string.IsNullOrEmpty(s)) return false;
+        int code = char.ConvertToUtf32(s, 0);
+        // emoji and pictograph blocks
+        return (code >= 0x1F300 && code <= 0x1FAFF);
+    }
 
+    static bool IsSymbol(string? s)
+    {
+        if (string.IsNullOrEmpty(s)) return false;
+        int code = char.ConvertToUtf32(s, 0);
+        // monochrome symbols (arrows, shapes, hearts, etc.)
+        return (code >= 0x2190 && code <= 0x2BFF) ||
+                (code >= 0x2600 && code <= 0x26FF);
+    }
+
+    static string ForceTextPresentation(string? s)
+    {
+        if (string.IsNullOrEmpty(s)) return string.Empty;
+
+        // If already has a presentation selector at the end, respect it
+        int lastIndex = s.Length - 1;
+        if (lastIndex >= 0)
+        {
+            // Handle surrogate pair at the end
+            int code;
+            if (lastIndex >= 1 && char.IsSurrogatePair(s, lastIndex - 1))
+                code = char.ConvertToUtf32(s, lastIndex - 1);
+            else
+                code = char.ConvertToUtf32(s, lastIndex);
+
+            if (code == 0xFE0E || code == 0xFE0F)
+                return s;
+        }
+
+        return s + "\uFE0E";
+    }
 }
+
 
 
 /// <summary>
