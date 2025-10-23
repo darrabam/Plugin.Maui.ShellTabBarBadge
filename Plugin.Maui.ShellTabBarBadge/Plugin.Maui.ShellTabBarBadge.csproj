@@ -22,7 +22,7 @@
 
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageId>Plugin.Maui.ShellTabBarBadge</PackageId>
-		<Version>1.2.1</Version>
+		<Version>1.2.2</Version>
 		<Authors>Abdulaziz Aldarrab</Authors>
 		<Company></Company>
 		<Description>A .NET MAUI plugin that adds customizable badges to Shell TabBar items</Description>
@@ -32,7 +32,7 @@
 		<PackageProjectUrl>https://github.com/darrabam/Plugin.Maui.ShellTabBarBadge</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageReleaseNotes>Initial release with support for text and dot badges on iOS and Android.</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed Android badge alignment when using FlowDirection="RightToLeft" in AppShell.</PackageReleaseNotes>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>

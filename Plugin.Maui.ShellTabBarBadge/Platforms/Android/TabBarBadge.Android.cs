@@ -166,6 +166,11 @@ public static partial class TabBarBadge
                 lp.TopMargin   = dpToPx(anchorY);
             }
 
+            // ✅ Prevent FlowDirection mirroring from pushing badge to the far edge when shell is RTL
+            label.LayoutDirection = Android.Views.LayoutDirection.Ltr;
+            lp.LayoutDirection = Android.Views.LayoutDirection.Ltr;
+            tabButton.LayoutDirection = Android.Views.LayoutDirection.Ltr;
+
             tabButton.AddView(label, lp);
         }
     }
