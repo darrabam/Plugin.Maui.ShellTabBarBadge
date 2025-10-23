@@ -163,7 +163,7 @@ Coordinate system:
 
 > **Note**  
 > On **iOS**, you can position badges anywhere — even *above* the TabBar.  
-> On **Android**, if the badge goes outside the TabBar bounds, it will be clipped (hidden).  
+> On **Android** & **Windows**, if the badge goes outside the TabBar bounds, it will be clipped (hidden).  
 
 ---
 
