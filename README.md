@@ -9,6 +9,15 @@ iOS | Android
   </tr>
 </table>
 
+Windows | Mac Catalyst
+----|--------
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/b876cb44-869b-4f4d-924d-736c73e4e27d" width="340"/></td>
+    <td><img src="https://github.com/user-attachments/assets/e0c08740-ee7c-498a-94a6-8852ae3ae722" width="340"/></td>
+  </tr>
+</table>
+
 `Plugin.Maui.ShellTabBarBadge` is a lightweight yet powerful .NET MAUI plugin that adds **badges** to Shell `TabBar` items.  
 
 - ✅ Supports **text badges**, **dot (indicator) badges**
@@ -116,13 +125,14 @@ builder.UseTabBarBadge(options =>
 ---
 ## Supported Versions & Platforms
 
-| Platform     | Support Status | Notes |
-|--------------|----------------|-------|
-| **.NET MAUI** | 9.0+ | Not tested on older versions |
-| **iOS**      | iOS 16.0+ | Required by .NET MAUI 9. Not tested on iOS 15 (deployment not supported) |
-| **Android**  | Android 8.0 (API 26)+ | Compatible |
-| **MacCatalyst** | Not supported | Contributions are welcomed |
-| **Windows**  | Not supported | Contributions are welcomed |
+| Platform        | Support Status | Notes |
+|-----------------|----------------|-------|
+| **.NET MAUI**   | 9.0+ | Not tested on older versions |
+| **iOS**         | ✅ Supported (iOS 16.0+) | Required by .NET MAUI 9. Not tested on iOS 15 (deployment not supported) |
+| **Android**     | ✅ Supported (Android 8.0 / API 26 +) | Fully compatible |
+| **Mac Catalyst**| ✅ Supported | Uses same UIKit implementation as iOS |
+| **Windows**     | ✅ Supported (Windows 10 / Build 19041+) | Implemented via WinUI NavigationView badges |
+
 ---
 
 ## Badge Behavior Matrix
@@ -202,7 +212,6 @@ This plugin was created to fill that gap with a **simple** API.
 ## Contributing
 
 Contributions are welcome!  
-- Add support for additional platforms (e.g., Windows)  
 - Report issues and suggest enhancements  
 - Submit pull requests  
 
