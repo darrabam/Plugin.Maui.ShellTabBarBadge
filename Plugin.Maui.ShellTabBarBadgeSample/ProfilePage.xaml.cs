@@ -7,7 +7,7 @@ public partial class ProfilePage : ContentPage
     int badgeAnchorX = 0;
     int badgeAnchorY = 0;
     HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
-    VerticalAlignment verticalAlignment = VerticalAlignment.Bottom;
+    VerticalAlignment verticalAlignment = VerticalAlignment.Top;
 
 	public ProfilePage()
 	{
