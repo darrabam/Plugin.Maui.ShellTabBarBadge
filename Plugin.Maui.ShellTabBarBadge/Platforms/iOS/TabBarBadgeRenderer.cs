@@ -38,7 +38,7 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
             return null;
 
         var candidates = FindLogicalTabButtons(tabBar)
-            .OrderBy(v => v.Frame.X)
+            .OrderBy(v => Array.IndexOf(tabBar.Subviews, v))
             .ToArray();
 
         int total = candidates.Length;
@@ -115,19 +115,41 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
         VerticalAlignment vertical,
         double fontSize)
     {
-
-        var activeLayer = GetTabButton(tabIndex, getActive: true);
-
         if (UIDevice.CurrentDevice.CheckSystemVersion(26, 0))
         {
+            // iOS 26+: Apply to inactive layer only
             var inactiveLayer = GetTabButton(tabIndex, getActive: false);
-            anchorX = -anchorX;
-            ApplyBadgeToLayer(inactiveLayer);
+            ApplyBadgeToLayer(inactiveLayer, -anchorX, anchorY);
+        }
+        else
+        {
+            // iOS < 26: Apply to ALL layers for this tab to ensure visibility regardless of active state
+            var tabBar = s_controller?.TabBar;
+            if (tabBar == null) return;
+
+            var candidates = FindLogicalTabButtons(tabBar)
+                .OrderBy(v => Array.IndexOf(tabBar.Subviews, v))
+                .ToArray();
+
+            int total = candidates.Length;
+            int tabCount = s_controller?.TabBar.Items?.Length ?? 0;
+
+            if (tabCount == 0 || total == 0) return;
+
+            int layersPerTab = Math.Max(1, total / tabCount);
+
+            int start = tabIndex * layersPerTab;
+            int end = Math.Min(start + layersPerTab, total);
+
+            var group = candidates[start..end]; // all layers for this tab
+
+            foreach (var layer in group)
+            {
+                ApplyBadgeToLayer(layer, anchorX, anchorY);
+            }
         }
 
-        ApplyBadgeToLayer(activeLayer);
-
-        void ApplyBadgeToLayer(UIView? button)
+        void ApplyBadgeToLayer(UIView? button, int xOffset, int yOffset)
         {
             if (button == null) return;
 
@@ -142,7 +164,6 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
 
             if (isDot)
             {
-                // ---------- Tiny 8x8 dot ----------
                 var dot = new UIView { Tag = tag };
                 dot.BackgroundColor = bg ?? UIColor.Red;
                 dot.Layer.CornerRadius = 4;
@@ -151,15 +172,14 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
                 button.AddSubview(dot);
 
                 NSLayoutConstraint.ActivateConstraints(new[] {
-                dot.WidthAnchor.ConstraintEqualTo(8),
-                dot.HeightAnchor.ConstraintEqualTo(8),
-                 });
+                    dot.WidthAnchor.ConstraintEqualTo(8),
+                    dot.HeightAnchor.ConstraintEqualTo(8),
+                });
 
-                ApplyPositionConstraints(button, dot, imageView ?? labelView, anchorX, anchorY, horizontal, vertical);
+                ApplyPositionConstraints(button, dot, imageView ?? labelView, xOffset, yOffset, horizontal, vertical);
                 return;
             }
 
-            // ---------- Text / Number Badge ----------
             const float minHeight = 16f;
             const float sidePadding = 6f;
 
@@ -184,14 +204,14 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
             container.AddSubview(label);
 
             NSLayoutConstraint.ActivateConstraints(new[] {
-            label.TopAnchor.ConstraintEqualTo(container.TopAnchor, 1),
-            label.BottomAnchor.ConstraintEqualTo(container.BottomAnchor, -1),
-            label.LeadingAnchor.ConstraintEqualTo(container.LeadingAnchor, sidePadding),
-            label.TrailingAnchor.ConstraintEqualTo(container.TrailingAnchor, -sidePadding),
-            container.HeightAnchor.ConstraintGreaterThanOrEqualTo(minHeight),
-        });
+                label.TopAnchor.ConstraintEqualTo(container.TopAnchor, 1),
+                label.BottomAnchor.ConstraintEqualTo(container.BottomAnchor, -1),
+                label.LeadingAnchor.ConstraintEqualTo(container.LeadingAnchor, sidePadding),
+                label.TrailingAnchor.ConstraintEqualTo(container.TrailingAnchor, -sidePadding),
+                container.HeightAnchor.ConstraintGreaterThanOrEqualTo(minHeight),
+            });
 
-            ApplyPositionConstraints(button, container, imageView ?? labelView, anchorX, anchorY, horizontal, vertical);
+            ApplyPositionConstraints(button, container, imageView ?? labelView, xOffset, yOffset, horizontal, vertical);
         }
     }
 
