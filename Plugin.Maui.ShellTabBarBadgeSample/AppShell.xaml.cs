@@ -8,6 +8,7 @@ namespace Plugin.Maui.ShellTabBarBadgeSample
         {
             InitializeComponent();
             this.Loaded += AppShell_Loaded;
+            Navigated += OnShellNavigated;
         }
         private async void AppShell_Loaded(object sender, EventArgs e)
         {
@@ -21,6 +22,16 @@ namespace Plugin.Maui.ShellTabBarBadgeSample
             TabBarBadge.Set(1, "9");
             TabBarBadge.Set(2, "🍕", textColor: Colors.Green, color: Colors.Transparent);
             TabBarBadge.Set(3, style: BadgeStyle.Dot, color: Colors.Blue);
+        }
+        private void OnShellNavigated(object sender, ShellNavigatedEventArgs e)
+        {
+            var current = CurrentItem?.CurrentItem;
+
+            EmailTab.Icon = "email.png";
+            if (current == EmailTab)
+            {
+                EmailTab.Icon = "email_read.png";
+            }
         }
     }
 }

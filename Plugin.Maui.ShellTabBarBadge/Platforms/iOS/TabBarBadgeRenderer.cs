@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using CoreFoundation;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using UIKit;
@@ -25,10 +26,32 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
 {
     static UITabBarController? s_controller;
 
+    // 🔁 Persistent badge storage (keeps badge alive across icon changes / navigation)
+    static readonly Dictionary<int, BadgeState> _badgeStates = new();
+
+    class BadgeState
+    {
+        public bool IsDot;
+        public string? Text;
+        public UIColor? Bg;
+        public UIColor? Fg;
+        public int AnchorX;
+        public int AnchorY;
+        public HorizontalAlignment Horizontal;
+        public VerticalAlignment Vertical;
+        public double FontSize;
+    }
+
     public override void UpdateLayout(UITabBarController controller)
     {
         base.UpdateLayout(controller);
         s_controller = controller; // keep latest controller
+
+        // 🔁 Reapply all stored badges after any layout rebuild
+        foreach (var index in _badgeStates.Keys.ToList())
+        {
+            ApplyStoredBadge(index);
+        }
     }
 
     static UIView? GetTabButton(int tabIndex, bool getActive)
@@ -115,75 +138,123 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
         VerticalAlignment vertical,
         double fontSize)
     {
-
-        var activeLayer = GetTabButton(tabIndex, getActive: true);
-
-        if (UIDevice.CurrentDevice.CheckSystemVersion(26, 0))
+        // 🔒 Handle hidden state (removes badge permanently)
+        if (!isDot && string.IsNullOrWhiteSpace(text))
         {
-            var inactiveLayer = GetTabButton(tabIndex, getActive: false);
-            anchorX = -anchorX;
-            ApplyBadgeToLayer(inactiveLayer);
+            _badgeStates.Remove(tabIndex);
+            RemoveBadge(tabIndex);
+            return;
         }
 
-        ApplyBadgeToLayer(activeLayer);
-
-        void ApplyBadgeToLayer(UIView? button)
+        // 🔁 Store badge state so it survives icon rebuilds
+        _badgeStates[tabIndex] = new BadgeState
         {
-            if (button == null) return;
+            IsDot = isDot,
+            Text = text,
+            Bg = bg,
+            Fg = fg,
+            AnchorX = anchorX,
+            AnchorY = anchorY,
+            Horizontal = horizontal,
+            Vertical = vertical,
+            FontSize = fontSize
+        };
 
-            int tag = 90000 + tabIndex;
-            button.ViewWithTag(tag)?.RemoveFromSuperview();
+        ApplyStoredBadge(tabIndex);
+    }
 
-            if (!isDot && string.IsNullOrWhiteSpace(text))
-                return;
+    static void ApplyStoredBadge(int tabIndex)
+    {
+        if (!_badgeStates.TryGetValue(tabIndex, out var state))
+            return;
 
-            var imageView = button.Subviews.FirstOrDefault(v => v is UIImageView);
-            var labelView = button.Subviews.FirstOrDefault(v => v is UILabel);
+        DispatchQueue.MainQueue.DispatchAsync(() =>
+        {
+            s_controller?.TabBar?.LayoutIfNeeded();
 
-            if (isDot)
+            var activeLayer = GetTabButton(tabIndex, getActive: true);
+
+            if (UIDevice.CurrentDevice.CheckSystemVersion(26, 0))
             {
-                // ---------- Tiny 8x8 dot ----------
-                var dot = new UIView { Tag = tag };
-                dot.BackgroundColor = bg ?? UIColor.Red;
-                dot.Layer.CornerRadius = 4;
-                dot.TranslatesAutoresizingMaskIntoConstraints = false;
-
-                button.AddSubview(dot);
-
-                NSLayoutConstraint.ActivateConstraints(new[] {
-                dot.WidthAnchor.ConstraintEqualTo(8),
-                dot.HeightAnchor.ConstraintEqualTo(8),
-                 });
-
-                ApplyPositionConstraints(button, dot, imageView ?? labelView, anchorX, anchorY, horizontal, vertical);
-                return;
+                var inactiveLayer = GetTabButton(tabIndex, getActive: false);
+                ApplyBadgeToLayer(inactiveLayer, tabIndex, state);
             }
 
-            // ---------- Text / Number Badge ----------
-            const float minHeight = 16f;
-            const float sidePadding = 6f;
+            ApplyBadgeToLayer(activeLayer, tabIndex, state);
+        });
+    }
 
-            var container = new UIView { Tag = tag };
-            container.BackgroundColor = bg ?? UIColor.Red;
-            container.TranslatesAutoresizingMaskIntoConstraints = false;
-            container.Layer.MasksToBounds = true;
-            container.Layer.CornerRadius = minHeight / 2f;
+    static void RemoveBadge(int tabIndex)
+    {
+        DispatchQueue.MainQueue.DispatchAsync(() =>
+        {
+            var activeLayer = GetTabButton(tabIndex, true);
+            var inactiveLayer = GetTabButton(tabIndex, false);
 
-            var label = new UILabel
+            activeLayer?.ViewWithTag(90000 + tabIndex)?.RemoveFromSuperview();
+            inactiveLayer?.ViewWithTag(90000 + tabIndex)?.RemoveFromSuperview();
+        });
+    }
+
+    static void ApplyBadgeToLayer(UIView? button, int tabIndex, BadgeState state)
+    {
+        if (button == null) return;
+
+        int tag = 90000 + tabIndex;
+        button.ViewWithTag(tag)?.RemoveFromSuperview();
+
+        var imageView = button.Subviews.FirstOrDefault(v => v is UIImageView);
+        var labelView = button.Subviews.FirstOrDefault(v => v is UILabel);
+
+        if (state.IsDot)
+        {
+            // ---------- Tiny 8x8 dot ----------
+            var dot = new UIView { Tag = tag };
+            dot.BackgroundColor = state.Bg ?? UIColor.Red;
+            dot.Layer.CornerRadius = 4;
+            dot.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            button.AddSubview(dot);
+
+            NSLayoutConstraint.ActivateConstraints(new[]
             {
-                TextColor = fg ?? UIColor.White,
-                Font = UIFont.SystemFontOfSize((nfloat)fontSize, UIFontWeight.Bold),
-                TextAlignment = UITextAlignment.Center,
-                Lines = 1,
-                LineBreakMode = UILineBreakMode.Clip,
-                TranslatesAutoresizingMaskIntoConstraints = false,
-                Text = text
-            };
+                dot.WidthAnchor.ConstraintEqualTo(8),
+                dot.HeightAnchor.ConstraintEqualTo(8),
+            });
 
-            button.AddSubview(container);
-            container.AddSubview(label);
+            ApplyPositionConstraints(button, dot, imageView ?? labelView,
+                state.AnchorX, state.AnchorY,
+                state.Horizontal, state.Vertical);
 
-            NSLayoutConstraint.ActivateConstraints(new[] {
+            return;
+        }
+
+        // ---------- Text / Number Badge ----------
+        const float minHeight = 16f;
+        const float sidePadding = 6f;
+
+        var container = new UIView { Tag = tag };
+        container.BackgroundColor = state.Bg ?? UIColor.Red;
+        container.TranslatesAutoresizingMaskIntoConstraints = false;
+        container.Layer.MasksToBounds = true;
+        container.Layer.CornerRadius = minHeight / 2f;
+
+        var label = new UILabel
+        {
+            TextColor = state.Fg ?? UIColor.White,
+            Font = UIFont.SystemFontOfSize((nfloat)state.FontSize, UIFontWeight.Bold),
+            TextAlignment = UITextAlignment.Center,
+            Lines = 1,
+            LineBreakMode = UILineBreakMode.Clip,
+            TranslatesAutoresizingMaskIntoConstraints = false,
+            Text = state.Text
+        };
+
+        button.AddSubview(container);
+        container.AddSubview(label);
+
+        NSLayoutConstraint.ActivateConstraints(new[]
+        {
             label.TopAnchor.ConstraintEqualTo(container.TopAnchor, 1),
             label.BottomAnchor.ConstraintEqualTo(container.BottomAnchor, -1),
             label.LeadingAnchor.ConstraintEqualTo(container.LeadingAnchor, sidePadding),
@@ -191,8 +262,9 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
             container.HeightAnchor.ConstraintGreaterThanOrEqualTo(minHeight),
         });
 
-            ApplyPositionConstraints(button, container, imageView ?? labelView, anchorX, anchorY, horizontal, vertical);
-        }
+        ApplyPositionConstraints(button, container, imageView ?? labelView,
+            state.AnchorX, state.AnchorY,
+            state.Horizontal, state.Vertical);
     }
 
     static void ApplyPositionConstraints(

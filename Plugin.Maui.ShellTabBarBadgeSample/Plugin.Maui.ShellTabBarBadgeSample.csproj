@@ -53,6 +53,7 @@
 		<MauiImage Include="Resources\Images\*" />
 
 		<MauiImage Update="Resources\Images\email.png" Resize="True" BaseSize="25,25" />
+		<MauiImage Update="Resources\Images\email_read.png" Resize="True" BaseSize="25,25" />
 		<MauiImage Update="Resources\Images\house.png" Resize="True" BaseSize="25,25" />
 		<MauiImage Update="Resources\Images\user.png" Resize="True" BaseSize="25,25" />
 		<MauiImage Update="Resources\Images\menu.png" Resize="True" BaseSize="25,25" />
