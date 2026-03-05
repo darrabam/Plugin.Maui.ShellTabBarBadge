@@ -22,7 +22,7 @@
 
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageId>Plugin.Maui.ShellTabBarBadge</PackageId>
-		<Version>1.3.1</Version>
+		<Version>1.3.2</Version>
 		<Authors>Abdulaziz Aldarrab</Authors>
 		<Company></Company>
 		<Description>A .NET MAUI plugin that adds customizable badges to Shell TabBar items</Description>
@@ -32,7 +32,7 @@
 		<PackageProjectUrl>https://github.com/darrabam/Plugin.Maui.ShellTabBarBadge</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageReleaseNotes>Resolved an issue on iOS where badges disappear or could appear on a wrong tab when the tab icon changed at runtime.</PackageReleaseNotes>
+		<PackageReleaseNotes>Resolved an issue on iOS where calling TabBarBadge.Set() with invalid tab index crashes the app.</PackageReleaseNotes>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>

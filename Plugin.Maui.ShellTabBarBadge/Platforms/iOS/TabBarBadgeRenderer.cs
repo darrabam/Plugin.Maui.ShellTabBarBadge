@@ -56,6 +56,15 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
 
     static UIView? GetTabButton(int tabIndex, bool getActive)
     {
+        int tabCount = s_controller?.TabBar?.Items?.Length ?? 0;
+        if (tabIndex < 0 || tabIndex >= tabCount)
+        {
+            #if DEBUG
+            System.Diagnostics.Debug.WriteLine($"[ShellTabBarBadge] Invalid tab index {tabIndex}. Valid range is 0–{tabCount - 1} (tab count: {tabCount})");
+            #endif
+            return null;
+        }
+
         var tabBar = s_controller?.TabBar;
         if (tabBar == null)
             return null;
@@ -65,7 +74,6 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
             .ToArray();
 
         int total = candidates.Length;
-        int tabCount = s_controller?.TabBar.Items?.Length ?? 0;
 
         if (tabCount == 0 || total == 0)
             return null;
@@ -74,7 +82,6 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
 
         int start = tabIndex * layersPerTab;
         int end = Math.Min(start + layersPerTab, total);
-
         var group = candidates[start..end]; // all layers for this tab
 
         return PickLayer(group, getActive, tabIndex);
@@ -138,6 +145,15 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
         VerticalAlignment vertical,
         double fontSize)
     {
+        var tabCount = s_controller?.TabBar?.Items?.Length ?? 0;
+        if (tabIndex < 0 || tabIndex >= tabCount)
+        {
+            #if DEBUG
+            System.Diagnostics.Debug.WriteLine($"[ShellTabBarBadge] Invalid tab index {tabIndex}. Valid range is 0–{tabCount - 1} (tab count: {tabCount})");
+            #endif
+            return;
+        }
+
         // 🔒 Handle hidden state (removes badge permanently)
         if (!isDot && string.IsNullOrWhiteSpace(text))
         {
@@ -165,6 +181,15 @@ internal class BadgeShellTabBarAppearanceTracker : ShellTabBarAppearanceTracker
 
     static void ApplyStoredBadge(int tabIndex)
     {
+        var tabCount = s_controller?.TabBar?.Items?.Length ?? 0;
+        if (tabIndex < 0 || tabIndex >= tabCount)
+        {
+            #if DEBUG
+            System.Diagnostics.Debug.WriteLine($"[ShellTabBarBadge] Invalid tab index {tabIndex}. Valid range is 0–{tabCount - 1} (tab count: {tabCount})");
+            #endif
+            return;
+        }
+
         if (!_badgeStates.TryGetValue(tabIndex, out var state))
             return;
 
