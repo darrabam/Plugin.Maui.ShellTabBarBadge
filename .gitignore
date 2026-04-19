@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /.dotnet
 /.gitignore
+/.appdata/NuGet/NuGet.Config
+/.gitignore
